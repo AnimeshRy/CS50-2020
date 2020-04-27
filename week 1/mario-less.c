@@ -11,9 +11,9 @@ int main(void)
         height = get_int("Height: ");
         }    
     while(height<=0||height>8);
-    pyramid(height);
+    reversepyramid(height);
 }
-void pyramid(int n)
+void reversepyramid(int n)
 {
     int spaces;     
     int dashes;
