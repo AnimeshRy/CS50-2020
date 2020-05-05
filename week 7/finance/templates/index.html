@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <table class="table table-bordered">
+        <thead>
+            <th>Symbol</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Total</th>
+        </thead>
+        <tbody>
+            {% for investment in portfolio %}
+            <tr>
+                <td>{{ investment.symbol }}</td>
+                <td>{{ investment.number_of_shares }}</td>
+                <td>{{ investment.price | usd }}</td>
+                <td>{{ (investment.price * investment.number_of_shares) | usd }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>CASH REMAING - </td>
+                <td></td>
+                <td></td>
+                <td>{{ available_cash | usd}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
