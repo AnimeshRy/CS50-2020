@@ -9,4 +9,4 @@ Investing your time and energy into solving the problem sets yourself is in my o
 
 [Academic Honesty](https://docs.cs50.net/2018/x/syllabus.html#academic-honesty)
 
-<img src="https://certificates.cs50.io/00506efb-c2ac-4427-9374-46e9e989b224.pdf?size=A4">
+[Certificate](https://certificates.cs50.io/00506efb-c2ac-4427-9374-46e9e989b224.pdf?size=A4)
