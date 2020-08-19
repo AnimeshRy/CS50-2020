@@ -1,78 +1,67 @@
-#include <stdio.h>
 #include <cs50.h>
 #include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
-int letter;
-int word;
-int sentence;
-
-
-int main(void)
-{
-
-// prompt the user with the question
-
-    string article = get_string("What's the article?: ");
-
-// set the length of article
-
-    int n = strlen(article);
-
-// add +1 if the article starts with alphanumeric letter
-
-    if (isalnum(article[0]))
+int main(int argc, string argv[])
+{    
+    // Check if correct # of arguments given
+    if (argc != 2)
     {
-        word += 1;
+        printf("Usage: ./vigenere keyword\n");
+        
+        return 1;
     }
-
-// count words
-
-    for (int i = 0; i < n;  i++)
+    else 
     {
-        // count letters
-
-        if (isalnum(article[i]))
+        for (int i = 0, n = strlen(argv[1]); i < n; i++)
         {
-            letter++;
+            if (!isalpha(argv[1][i]))
+            {
+                printf("Usage: ./vigenere keyword");
+                
+                return 1;
+            }    
         }
-
-        // count words
-
-        if (isspace(article[i]) && (isalnum(article[i + 1]) || article[i + 1] == '"'))
+    }
+    
+    // Store key as string and get length
+    string k = argv[1];
+    int kLen = strlen(k);
+    
+    // Get text to encode
+    string p = get_string("PLaintext: ");
+    printf("Ciphertext: ");
+    
+    // Loop through text
+    for (int i = 0, j = 0, n = strlen(p); i < n; i++)
+    {            
+        // Get key for this letter
+        int letterKey = tolower(k[j % kLen]) - 'a';
+        
+        // Keep case of letter
+        if (isupper(p[i]))
         {
-            word++;
+            // Get modulo number and add to appropriate case
+            printf("%c", 'A' + (p[i] - 'A' + letterKey) % 26);
+            
+            // Only increment j when used
+            j++;
         }
-
-        // count sentences
-
-        if ((article[i] == '!' || article[i] == '?' || article[i] == '.') && isalnum(article[i - 1]))
+        else if (islower(p[i]))
         {
-            sentence++;
+            printf("%c", 'a' + (p[i] - 'a' + letterKey) % 26);
+            j++;
         }
-
+        else
+        {
+            // return unchanged
+            printf("%c", p[i]);
+        }
     }
-
-// calculate Coleman-Liau index
-
-    double grade = 0.0588 * (100.0 * (double)letter / word) - 0.296 * (100.0 * (double)sentence / word) - 15.8;
-
-// debugger
-    int brad = (int) round(grade);
-    //  printf("Letters: %lf\n Words: %i\n Sentences: %lf\n", (double)letter, word, (double)sentence);
-
-// print result
-    if (brad <= 1)
-    {
-        printf("Before Grade 1\n");
-    }
-    else if (brad < 16)
-    {
-        printf("Grade %d\n", brad);
-    }
-    else
-    {
-        printf("Grade 16+\n");
-    }
+    
+    printf("\n");
+    
+    return 0;
 }
